@@ -48,14 +48,14 @@ class Cart(models.Model):
 
 
 def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
-    if 'post_' in action:
+    if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
         print(action)
         products = instance.products.all()
         total = 0
         for x in products:
             total += x.price
         if instance.subtotal != total:
-            instance.total = total
+            instance.subtotal = total
             instance.save()
 
 
@@ -63,7 +63,10 @@ m2m_changed.connect(m2m_changed_cart_receiver, sender=Cart.products.through)
 
 
 def pre_save_cart_receiver(sender, instance, *args, **kwargs):
-    instance.total = instance.subtotal + 10
+    if instance.subtotal > 0:
+        instance.total = instance.subtotal + 10
+    else:
+        instance.total = 0.00
 
 
 pre_save.connect(pre_save_cart_receiver, sender=Cart)
