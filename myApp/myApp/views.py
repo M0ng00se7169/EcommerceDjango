@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 
 from .forms import ContactForm, LoginForm, RegisterForm
 
+
 def about_page(request):
     return render(request, "home_page.html", {})
 
@@ -26,31 +27,34 @@ def contact_page(request):
 def home_page(request):
     return render(request, "home_page.html", {})
 
+
 def login_page(request):
     login_form = LoginForm(request.POST or None)
     context = {
         "form": login_form
     }
     print("User is logged in")
-    #print(request.user.is_authenticated())
+    # print(request.user.is_authenticated())
     if login_form.is_valid():
         print(login_form.cleaned_data)
         username = login_form.cleaned_data.get("username")
         password = login_form.cleaned_data.get("password")
         user = authenticate(request, username=username, password=password)
-        #print(request.user.is_authenticated())
+        # print(request.user.is_authenticated())
         if user is not None:
             print('User is Authentificated: ', request.user.is_authenticated)
             login(request, user)
             print('User is logged in')
-            #context['form'] = LoginForm()
+            # context['form'] = LoginForm()
             return redirect("/")
         else:
             print("error")
 
     return render(request, "auth/login.html", context)
 
+
 User = get_user_model()
+
 
 def register_page(request):
     login_form = RegisterForm(request.POST or None)
