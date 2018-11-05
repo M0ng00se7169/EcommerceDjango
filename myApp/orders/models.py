@@ -15,6 +15,18 @@ ORDER_STATUS_CHOICES = (
 )
 
 
+class OrderManager(models.Manager):
+    def new_or_get(self, billing_profile, cart_obj):
+        order_qs = self.get_queryset().filter(billing_profile=billing_profile, cart=cart_obj, active=True)
+        created = False
+        if order_qs.count() == 1:
+            obj = order_qs.first()
+        else:
+            obj = self.model.objects.create(billing_profile=billing_profile, cart=cart_obj)
+            created = True
+        return obj, created
+
+
 # Create your models here.
 class Order(models.Model):
     billing_profile = models.ForeignKey(BillingProfile, on_delete=False, null=True, blank=True)
@@ -28,6 +40,8 @@ class Order(models.Model):
     def __unicode__(self):
         return self.order_id
 
+    objects = OrderManager()
+
     def update_total(self):
         cart_total = math.fsum([self.cart.total, 0])
         shipping_total = self.shipping_total
@@ -40,6 +54,9 @@ class Order(models.Model):
 def pre_save_create_order_id(sender, instance, *args, **kwargs):
     if not instance.order_id:
         instance.order_id = unique_order_id_generator(instance)
+    qs = Order.objects.filter(cart=instance.cart).exclude(billing_profile=instance.billing_profile)
+    if qs.exists():
+        qs.update(active=False)
 
 
 pre_save.connect(pre_save_create_order_id, sender=Order)

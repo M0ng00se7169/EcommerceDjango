@@ -15,11 +15,11 @@
             </div>
         </div>
     {% else %}
-    <h1>Checkout</h1>
+        <h1>Checkout</h1>
 
-    <p>Cart Total: {{ object.cart.total }}</p>
-    <p>Shipping Total: {{ object.shipping_total }}</p>
-    <p>Order Total: {{ object.order_total }}</p>
+        <p>Cart Total: {{ object.cart.total }}</p>
+        <p>Shipping Total: {{ object.shipping_total }}</p>
+        <p>Order Total: {{ object.order_total }}</p>
 
     {% endif %}
 {% endblock %}
