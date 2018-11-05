@@ -46,7 +46,7 @@ class ProductDetailSlugView(DetailView):
     template_name = "products/detail.html"
 
     def get_context_data(self, *args, **kwargs):
-        context = super(ProductDetailSlugView, self).get_context_data(**kwargs)
+        context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs)
         cart_obj, new_obj = Cart.objects.new_or_get(self.request)
         context['cart'] = cart_obj
         return context
@@ -91,7 +91,7 @@ class ProductDetailView(DetailView):
 
 
 def product_detail_view(request, pk=None, *args, **kwargs):
-    #instance = get_object_or_404(Product, pk=pk)
+    # instance = get_object_or_404(Product, pk=pk)
     # try:
     #     instance = Product.objects.get(id=pk)
     # except Product.DoesNotExist:
