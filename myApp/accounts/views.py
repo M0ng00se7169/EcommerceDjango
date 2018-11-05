@@ -28,8 +28,6 @@ def guest_register_page(request):
     return redirect('/register/')
 
 
-
-
 def login_page(request):
     login_form = LoginForm(request.POST or None)
     context = {
