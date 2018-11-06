@@ -17,10 +17,76 @@
         {% include 'base/js.html' %}
         <script>
           $(document).ready(function(){
+              // Contact Form Handler
+
+              let contactForm = $(".contact-form");
+              let contactFormMethod = contactForm.attr("method");
+              let contactFormEndpoint = contactForm.attr('action');
+
+
+              function displaySubmitting(submitBtn, defaultText, doSubmit){
+                  if (doSubmit) {
+                      submitBtn.addClass("disabled");
+                      submitBtn.html("<i class='fa fa-spin fa-spinner'></i> Sending...")
+                  } else {
+                      submitBtn.removeClass("disabled");
+                      submitBtn.html(defaultText);
+                  }
+              }
+
+              contactForm.submit(function (event) {
+                  event.preventDefault();
+
+                  let contactFormSubmitBtn = contactForm.find("[type='submit']");
+                  let contactFormSubmitBtnTxt = contactFormSubmitBtn.text();
+
+                  let contactFormData = contactForm.serialize();
+                  let thisForm = $(this);
+                  displaySubmitting(contactFormSubmitBtn, "", true);
+                  $.ajax({
+                      method: contactFormMethod,
+                      url: contactFormEndpoint,
+                      data: contactFormData,
+                      success: function (data) {
+                          thisForm[0].reset();
+                          $.alert({
+                             title: "Success!",
+                             content: data.message,
+                             theme: "modern",
+                         });
+                         setTimeout(function () {
+                            displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt, false);
+                         }, 500)
+                      },
+                      error: function (error) {
+                         console.log(error);
+                         let jsonData = error.responseJSON;
+                         let msg = "";
+
+                         $.each(jsonData, function (key, value) {
+                            msg += key + ": " + value[0].message + "<br/>"
+                         });
+
+                         $.alert({
+                             title: "Oops!",
+                             content: msg,
+                             theme: "modern",
+                         })
+
+                         setTimeout(function () {
+                            displaySubmitting(contactFormSubmitBtn, contactFormSubmitBtnTxt, false);
+                         }, 500)
+                      }
+                  })
+              });
+
+
+
+
              // Auto Search
-              var searchForm = $(".search-form");
-              var searchInput = searchForm.find("[name='q']");
-              var typingTimer;
+              let searchForm = $(".search-form");
+              let searchInput = searchForm.find("[name='q']");
+              let typingTimer;
               var typingInterval = 500; // .5 seconds
               var searchBtn = searchForm.find("[type='submit']");
               searchInput.keyup(function(event){
@@ -73,11 +139,15 @@
                     }
                   },
                   error: function(errorData){
-                    console.log("error")
-                    console.log(errorData)
+                     $.alert({
+                      title: "Oops!",
+                      content: "An error occurred",
+                      theme: "modern",
+                    })
                   }
                 })
             });
+
             function refreshCart() {
                 console.log('in current cart');
                 let cartTable = $(".cart-table");
@@ -114,8 +184,11 @@
                         }
                     },
                     error: function (error) {
-                        console.log('error');
-                        console.log(error);
+                        $.alert({
+                            title: "Oops!",
+                            content: "An error occurred",
+                            theme: "modern",
+                        })
                     }
                 })
             }
