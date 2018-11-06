@@ -13,8 +13,8 @@ class CartManager(models.Manager):
         qs = self.get_queryset().filter(id=cart_id)
         if qs.count() == 1:
             new_obj = False
-            cart_obj = qs.get()
-            if request.user.is_authenticated and cart_obj.user is None:
+            cart_obj = qs.first()
+            if request.user.is_authenticated() and cart_obj.user is None:
                 cart_obj.user = request.user
                 cart_obj.save()
         else:
@@ -24,17 +24,16 @@ class CartManager(models.Manager):
         return cart_obj, new_obj
 
     def new(self, user=None):
-        print(user)
         user_obj = None
         if user is not None:
-            if user.is_authenticated:
+            if user.is_authenticated():
                 user_obj = user
         return self.model.objects.create(user=user_obj)
 
 
 # Create your models here.
 class Cart(models.Model):
-    user      = models.ForeignKey(User, null=True, blank=True, on_delete=False)
+    user      = models.ForeignKey(User, null=True, blank=True)
     products  = models.ManyToManyField(Product, blank=True)
     updated   = models.DateTimeField(auto_now=True)
     total     = models.DecimalField(default=0.00, max_digits=20, decimal_places=2)

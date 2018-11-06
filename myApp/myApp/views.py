@@ -25,6 +25,7 @@ def contact_page(request):
 
 
 def home_page(request):
+    print(request.session.get("first_name", "Unknown"))
     return render(request, "home_page.html", {})
 
 

@@ -25,7 +25,7 @@ class BillingProfileManager(models.Manager):
 
 
 class BillingProfile(models.Model):
-    user      = models.ForeignKey(User, null=True, blank=True, on_delete=False, unique=True)
+    user      = models.ForeignKey(User, null=True, blank=True,  unique=True)
     email     = models.EmailField()
     active    = models.BooleanField(default=True)
     update    = models.DateTimeField(auto_now=True)
