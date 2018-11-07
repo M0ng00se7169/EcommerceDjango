@@ -1,0 +1,58 @@
+[
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "title": "T-short",
+        "slug": "t-short",
+        "description": "This is an awesome T-Short",
+        "price": "39.99",
+        "image": "products/beach.jpg",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-10-30T21:02:02.933Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "title": "Hat",
+        "slug": "hat",
+        "description": "This is my hat",
+        "price": "39.99",
+        "image": "products/beach_8xizyfO.jpg",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-10-30T21:02:02.933Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "title": "supercomputer",
+        "slug": "supercomputer",
+        "description": "Supercomputer",
+        "price": "100000.00",
+        "image": "",
+        "featured": true,
+        "active": true,
+        "timestamp": "2018-10-30T21:02:02.933Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+        "title": "TShirt",
+        "slug": "tshirt",
+        "description": "Another T-Short ;)",
+        "price": "39.99",
+        "image": "",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-10-30T21:02:02.933Z"
+    }
+}
+]
