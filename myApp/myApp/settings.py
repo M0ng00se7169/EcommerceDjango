@@ -115,6 +115,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'accounts.User'
 
+FORCE_SESSION_TO_ONE = False
+FORCE_INACTIVE_USER_ENDSESSION = False
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
