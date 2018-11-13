@@ -8,8 +8,18 @@
 <!-- jquery-confirm-JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 
+<!-- Stripe Form -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<!-- JS-Render Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.91/jsrender.min.js"></script>
+{% include 'base/js_templates.html' %}
+
+<!-- Django Secure AJAX JS -->
+<script src="{% static 'js/csrf.ajax.js' %}"></script>
+
 <!-- myApp Custom JS -->
 <script src="{% static 'js/myApp.js' %}"></script>
 
-<!-- myApp Custom JS -->
-<script src="{% static 'js/csrf.ajax.js' %}"></script>
+<!-- myApp Main JS -->
+<script src="{% static 'js/myApp.main.js' %}"></script>
