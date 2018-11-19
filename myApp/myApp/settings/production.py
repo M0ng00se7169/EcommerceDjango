@@ -25,7 +25,7 @@ SECRET_KEY = 'eb&$$rz0#)3+7y$^r7xsswrm*98d2iteyr1oh7j4)#8))ciux('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.herokuapp.com']
+ALLOWED_HOSTS = ['.herokuapp.com]
 
 MAILCHIMP_API_KEY = '611e67fed91dca6ddc9f9f8d0eb8f879-us19'
 MAILCHIMP_DATA_CENTER = 'us19'
