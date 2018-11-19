@@ -43,7 +43,8 @@ class Mailchimp(object):
         hashed_email = get_subscriber_hash(email)
         endpoint = self.get_members_endpoint() + "/" + hashed_email
         data = {
-            "status": self.check_valid_status(status)
+            "status": self.check_valid_status(status),
+            "email_address": email
         }
         r = requests.put(endpoint, auth=("", self.key), data=json.dumps(data))
         return r.status_code, r.json()
@@ -53,18 +54,26 @@ class Mailchimp(object):
         # method
         # data
         # auth
-        hashed_email = get_subscriber_hash(email)
-        endpoint = self.get_members_endpoint() + "/" + hashed_email
+        # hashed_email = get_subscriber_hash(email)
+        endpoint = self.api_url
         r = requests.get(endpoint, auth=("", self.key))
         return r.status_code, r.json()
 
     def check_valid_status(self, status):
         choices = ['subscribed', 'unsubscribed', 'cleaned', 'pending']
-        if status is not choices:
+        if status not in choices:
             raise ValueError("Not a valid choice for email status")
         return status
 
     def add_email(self, email):
+        # status = "subscribed"
+        # self.check_valid_status(status)
+        # data = {
+        #     "email_address": email,
+        #     "status": status
+        # }
+        # endpoint = self.list_endpoint + "/members"
+        # r = requests.post(endpoint, auth=("", self.key), data=json.dumps(data))
         return self.change_subscription_status(email, status='subscribed')
 
     def unsubscribe(self, email):

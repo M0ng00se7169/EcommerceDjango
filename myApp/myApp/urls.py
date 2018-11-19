@@ -26,6 +26,7 @@ from addresses.views import checkout_address_create_view, checkout_address_reuse
 from accounts.views import LoginView, RegisterView, guest_register_page
 from .views import home_page, about_page, contact_page
 from billing.views import payment_method_view, payment_method_create_view
+from marketing.views import MarketingPreferenceUpdateView, MailchimpWebhookView
 
 urlpatterns = [
     url(r'^$', home_page, name="home"),
@@ -42,6 +43,8 @@ urlpatterns = [
     url(r'^billing/payment-method/create/$', payment_method_create_view, name="billing-payment-method-endpoint"),
     url(r'^register/$', RegisterView.as_view(), name="register"),
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
+    url(r'^settings/email/$', MarketingPreferenceUpdateView.as_view(), name='marketing-pref'),
+    url(r'^webhooks/mailchimp/$', MailchimpWebhookView.as_view(), name='webhooks-mailchimp'),
     url(r'^products/', include("products.urls",  namespace='products')),
     url(r'^search/', include("search.urls",  namespace='search')),
     url('admin/', admin.site.urls),
